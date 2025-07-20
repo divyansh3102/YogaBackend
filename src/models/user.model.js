@@ -2,6 +2,22 @@ import mongoose, { Schema } from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
+const validDomains = [
+  "gmail.com",
+  "yahoo.com",
+  "hotmail.com",
+  "outlook.com",
+  "protonmail.com",
+];
+
+const isDomainValid = (email) => {
+  const domain = email.split("@")[1].toLowerCase();
+  return validDomains.includes(domain);
+};
+const validateEmail = (email) => {
+  const domain = email.split("@")[1].toLowerCase();
+  return validDomains.includes(domain);
+};
 const userSchema = new Schema(
   {
     username: {
