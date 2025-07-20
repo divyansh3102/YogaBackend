@@ -4,7 +4,7 @@ import cookieParser from 'cookie-parser';
 
 const  app = express();
 
-const allowedOrigins = ["http://localhost:5173","https://yoga-lac-eight.vercel.app/"];
+const allowedOrigins = ["http://localhost:5173","https://yoga-lac-eight.vercel.app"];
 
 app.use(
     cors({
