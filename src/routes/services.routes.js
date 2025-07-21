@@ -13,7 +13,7 @@ import isAdmin from "../middlewares/isAdmin.js";
 const router = Router();
 
 router.post("/add", verifyJWT, isAdmin, upload.single("image"), createService);
-router.get("/", verifyJWT, getServices);
+router.get("/",  getServices);
 router.get("/:id", verifyJWT, getServiceById);
 router.put("/:id", verifyJWT, isAdmin, upload.single("image"), updateService);
 router.delete("/:id", verifyJWT, isAdmin, deleteService);

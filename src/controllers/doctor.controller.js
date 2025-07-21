@@ -12,7 +12,7 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 const createDoctor = asyncHandler(async (req, res) => {
   try {
     const { name, email, status, experienceInYears, educationDetails, servicesOffered, about, phoneNumber } = req.body;
-
+    console.log("Hello doctor controller");
     const avatarLocalPath = req.file?.path;
     if (!avatarLocalPath) {
       throw new ApiError(400, "Image is required");

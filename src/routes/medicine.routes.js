@@ -13,7 +13,7 @@ import isAdmin from "../middlewares/isAdmin.js";
 const router = Router();
 
 router.post("/add", verifyJWT, isAdmin, upload.single("image"), createMedicine);
-router.get("/", verifyJWT, getMedicines);
+router.get("/",  getMedicines);
 router.get("/:id", verifyJWT, getMedicineById);
 router.put("/:id", verifyJWT, isAdmin, upload.single("image"), updateMedicine);
 router.delete("/:id", verifyJWT, isAdmin, deleteMedicine);

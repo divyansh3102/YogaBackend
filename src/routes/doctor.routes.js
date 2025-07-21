@@ -14,7 +14,7 @@ import isAdmin from "../middlewares/isAdmin.js";
 const router = Router();
 
 router.post("/add", verifyJWT,isAdmin, upload.single("image"), createDoctor);
-router.get("/", verifyJWT, getDoctors);
+router.get("/",  getDoctors);
 router.get("/:id", verifyJWT,isAdmin, getDoctorById);
 router.put("/:id", verifyJWT,isAdmin, upload.single("image"), updateDoctor);
 router.delete("/:id", verifyJWT,isAdmin, deleteDoctor);
