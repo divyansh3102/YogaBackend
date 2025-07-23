@@ -16,4 +16,11 @@ router.post("/logout", verifyJWT, logoutUser);
 router.get("/", verifyJWT,isAdmin, getAllUsers);
 router.delete("/:id", verifyJWT, isAdmin, deleteUser);
 
+router.get('/verify-token', isAdmin, (req, res) => {
+  res.json({
+    success: true,
+    user: req.user // user data from the token
+  });
+}); 
+
 export default router;
