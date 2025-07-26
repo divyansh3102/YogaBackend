@@ -33,7 +33,7 @@ import userRoutes from './routes/user.routes.js';
 import serviceRoutes from './routes/services.routes.js';
 import medicineRoutes from './routes/medicine.routes.js';
 import doctorRoutes from './routes/doctor.routes.js';
-import emailRoutes from './controllers/email.controller.js';
+import emailRoutes from './routes/email.routes.js';
 
 // Use routes
 app.use("/api/v1/users", userRoutes);
