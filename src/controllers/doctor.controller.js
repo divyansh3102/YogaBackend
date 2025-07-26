@@ -11,6 +11,8 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 const createDoctor = asyncHandler(async (req, res) => {
   try {
+    console.log(req.body)
+    console.log(req.files) 
     const { name, email, status, experienceInYears, educationDetails, servicesOffered, about, phoneNumber } = req.body;
     console.log("Hello doctor controller");
     const avatarLocalPath = req.file?.path;
