@@ -1,4 +1,4 @@
-  import { asyncHandler } from "../utils/asyncHandler.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 import { ApiError } from "../utils/ApiError.js";
 
@@ -76,10 +76,50 @@ const getDoctorById = asyncHandler(async (req, res) => {
 });
 
 const updateDoctor = asyncHandler(async (req, res) => {
-  const doctor = await Doctor.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  const { 
+    name, 
+    email, 
+    status, 
+    experienceInYears, 
+    educationDetails, 
+    servicesOffered, 
+    about, 
+    phoneNumber 
+  } = req.body;
+
+  // 2. Prepare the object for the data to be updated
+  const updateData = { 
+    name, 
+    email, 
+    status, 
+    experienceInYears, 
+    educationDetails, 
+    servicesOffered, 
+    about, 
+    phoneNumber 
+  };
+
+   if(req.file){
+     const imageLocalPath = req.file?.path;
+    if (!imageLocalPath) {
+      throw new ApiError(400, "Image is required");
+    }
+
+    const image = await uploadOnCloudinary(imageLocalPath);
+    if (!image) {
+      throw new ApiError(400, "Image is required");
+    }
+    updateData.image = image.url;
+
+   }
+  const doctor = await Doctor.findByIdAndUpdate(
+    req.params.id, 
+    updateData, // Use the complete updateData object here
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
 
   if (!doctor) {
     throw new ApiError(404, "Doctor not found");

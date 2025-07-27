@@ -65,7 +65,22 @@ const getServiceById = asyncHandler(async (req, res) => {
 });
 
 const updateService = asyncHandler(async (req, res) => {
-  const service = await Service.findByIdAndUpdate(req.params.id, req.body, {
+   const { eventName, instructor, date, time, mode } = req.body;
+   const updateData = { eventName, instructor, date, time, mode };
+  if (req.file) {
+    const avatarLocalPath = req.file.path;
+    if (!avatarLocalPath) {
+      throw new ApiError(400, "Image is required");
+    }
+
+    const image = await uploadOnCloudinary(avatarLocalPath);
+    if (!image) {
+      throw new ApiError(400, "Image is required");
+    }
+    updateData.image = image.url;
+  }
+
+  const service = await Service.findByIdAndUpdate(req.params.id, updateData, {
     new: true,
     runValidators: true,
   });
@@ -77,7 +92,7 @@ const updateService = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     data: service,
-  });
+  })
 });
 
 const deleteService = asyncHandler(async (req, res) => {

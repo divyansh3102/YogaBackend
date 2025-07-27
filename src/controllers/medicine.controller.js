@@ -64,10 +64,31 @@ const getMedicineById = asyncHandler(async (req, res) => {
 });
 
 const updateMedicine = asyncHandler(async (req, res) => {
-  const medicine = await Medicine.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+ const { name, category, stocks, price } = req.body;
+   const updateData = { name, category, stocks, price };
+
+   if(req.file){
+     const imageLocalPath = req.file?.path;
+    if (!imageLocalPath) {
+      throw new ApiError(400, "Image is required");
+    }
+
+    const image = await uploadOnCloudinary(imageLocalPath);
+    if (!image) {
+      throw new ApiError(400, "Image is required");
+    }
+    updateData.image = image.url;
+
+   }
+
+   const medicine = await Medicine.findByIdAndUpdate(
+    req.params.id, 
+    updateData, // Use the complete updateData object here
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
 
   if (!medicine) {
     throw new ApiError(404, "Medicine not found");
